@@ -11,7 +11,7 @@ function insert(body) {
     .then(ids => ids[0]);
 };
 
-function remove(id) {
+function remove() {
   return db('name')
-    .remove(id);
+    .truncate();
 };

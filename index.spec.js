@@ -32,5 +32,18 @@ describe('server.js', () => {
       expect(name.length).toBe(1);
       expect(name[0].name).toBe('Kels');
     });
+
+    it('should delete name', async () => {
+      await Name.insert({ name: 'Kels' });
+      const names = await db('name');
+
+      expect(name.length).toBe(1);
+      expect(name[0].name).toBe('Kels');
+
+      await Name.remove()
+
+      const name = await db('name');
+      expect(name.length).toBe(0);
+    });
   });
 });

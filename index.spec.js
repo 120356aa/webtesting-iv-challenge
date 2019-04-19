@@ -1,6 +1,9 @@
 const request = require('supertest');
 const server = require('./index.js');
 
+const Name = require('./data/nameModel.js');
+const db = require('./dbConfig.js');
+
 describe('server.js', () => {
   describe('GET/ route', () => {
     it('should return status 200', async () => {
@@ -16,6 +19,18 @@ describe('server.js', () => {
     it('should return JSON', async () => {
       const res = await request(server).get('/');
       expect(res.type).toEqual('application/json');
+    });
+  });
+
+  describe('name test', () => {
+    beforeEach(() => db('name').truncate());
+
+    it('should insert a name', async () => {
+      await Name.insert({ name: 'Kels' });
+      const name = await db('name');
+
+      expect(name.length).toBe(1);
+      expect(name[0].name).toBe('Kels');
     });
   });
 });
